@@ -3,7 +3,7 @@ const config  = {
     // Encryption
     EncryptStrings: true, // Encrypt all strings
     EncryptBoolean: true, // Change boolean statements into number statements (using > and < sign)
-    EncryptVariables: true, // Change names of variables
+    EncryptVariables: false, // Change names of variables
 
     // Only target .go files, all other type of files wont be written in the output
     OnlyOutputGo: true,
@@ -201,7 +201,7 @@ const Obfuscate = function(contents) {
     // Parsing Variables
     const regex = /(?:var\s+|\s+)([^\s,]+)\s*(?:[:=]|:=)/gm;
     const matches = mainFile.match(regex);
-    if (matches) {
+    if (matches && config.EncryptVariables) {
         matches.forEach((match) => {
             const variableName = match.split(/\s+/)[1];
             const useCases = [
