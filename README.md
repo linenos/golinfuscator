@@ -8,7 +8,9 @@ Since Windows AntiVirus triggered when obfuscating my go projects with garble, I
 
 ## Upcoming Features
 > Rename variables
+> 
 > Insert junk in functions
+> 
 > Hide package imports
 
 ## Installation
