@@ -1,22 +1,19 @@
 // YES THIS TARGETS ALL FILES FOUND [ this searches through directories ]
 const config  = {
-    // Encrypt all strings
-    EncryptStrings: true,
-
-    // Change boolean statements into number statements (using > and < sign)
-    EncryptBoolean: true,
-
-    // Minify script afterwards, compacting it
-    Minify: true,
+    // Encryption
+    EncryptStrings: true, // Encrypt all strings
+    EncryptBoolean: true, // Change boolean statements into number statements (using > and < sign)
+    EncryptVariables: true, // Change names of variables
 
     // Only target .go files, all other type of files wont be written in the output
     OnlyOutputGo: true,
 
+    // Skip Existing Files in the Output Directory
+    SkipExisting: false,
+
     // Output Directory
     Output: "./Output",
-
-    // Auto Build after obfuscation
-    Build: true,
+    Build: true, // Auto build after obfuscating
     BuildScript: "go build -o obfuscated.exe ./" // this script builds the obfuscated content into the Output directory
 }
 
@@ -198,6 +195,30 @@ const Obfuscate = function(contents) {
         cached[i] = generateString(getRandomInt(10, 18));
     }
 
+    // Removing Comments
+    mainFile = mainFile.replace(/\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g, "");
+
+    // Parsing Variables
+    const regex = /\bvar\s+([^\s,]+)\s+(?:=|:=)\s+.*/gm;
+    const matches = mainFile.match(regex);
+    if (matches) {
+        matches.forEach((match) => {
+            const variableName = match.split(/\s+/)[1];
+            const useCases = [
+                `.`, ` `, // Indexing
+                `[`, `(`, "{", "=", ",", // Default expressions
+                `+`, "-", ",", ">", "<", "*", "^", "%", "/" // Math expressions
+            ];
+
+            let newName = "v_" + generateString(13);
+            mainFile = mainFile.replace(`var ${variableName}`, `var ${newName}`);
+            for (i in useCases) {
+                let useCase = useCases[i];
+                mainFile = mainFile.split(variableName + useCase).join(newName + useCase); // replace variable
+            }
+        });
+    }
+
     // Parsing statements
     let split = mainFile.split(/\r?\n/);
     let allStrings = [];
@@ -348,7 +369,7 @@ loopDirectory(path.join(__dirname, "./"), true, (filename, filepath, isdir) => {
     // Parse only .go files
     let outputP = path.join(config.Output, filepath.replace(__dirname, ""));
     if (filename.split(".")[filename.split(".").length - 1] == "go") {
-        if (fs.existsSync(outputP)) {
+        if (fs.existsSync(outputP) && config.SkipExisting) {
             return; // Already 'Obfuscated'
         }
 
