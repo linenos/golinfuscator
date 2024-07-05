@@ -15,7 +15,7 @@ Since Windows AntiVirus triggered when obfuscating my go projects with garble, I
 
 ## Installation
 golinfuscator requires [Node.js](https://nodejs.org/en/download/prebuilt-installer) v16+ to run.
-After installing, place the "build.js" in your golang project directory and run:
+Copy the "build.js" file into your directory then run
 ```lua
 node build.js
 ```
