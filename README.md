@@ -1,13 +1,43 @@
 # golinfuscator
-I have the shittiest names for my projects lol. 
-This is a 'obfuscator' that aims to protect ur strings and boolean statements
+Since windows AntiVirus triggered when obfuscating my go projects with garble, I decided to make this.
 
-## Requirements
-Node.js -> https://nodejs.org/en/download/prebuilt-installer
+## Features
+- Encrypt Strings
+- Encrypt Boolean statements
+- Minify Output [broken]
 
-## Usage
-Place the build.js file in your golang project directory
-Then run: node build.js
+## Upcoming Features
+> Rename variables
+> Insert junk in functions
+> Hide package imports
 
-## Options
-In the build.js file there should be instructions on how to change certain options.
+## Installation
+golinfuscator requires [Node.js](https://nodejs.org/en/download/prebuilt-installer) v16+ to run.
+After installing, place the "build.js" in your golang project directory and run:
+```lua
+node build.js
+```
+
+Custom Options [ modify the build.js top line code ]
+```js
+const config  = {
+    // Encrypt all strings
+    EncryptStrings: true,
+
+    // Change boolean statements into number statements (using > and < sign)
+    EncryptBoolean: true,
+
+    // Minify script afterwards, compacting it
+    Minify: true,
+
+    // Only target .go files, all other type of files wont be written in the output
+    OnlyOutputGo: true,
+
+    // Output Directory
+    Output: "./Output",
+
+    // Auto Build after obfuscation
+    Build: true,
+    BuildScript: "go build -o obfuscated.exe ./" // this script builds the obfuscated content into the Output directory
+}
+```
