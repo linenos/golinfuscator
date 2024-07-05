@@ -199,15 +199,15 @@ const Obfuscate = function(contents) {
     mainFile = mainFile.replace(/\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g, "");
 
     // Parsing Variables
-    const regex = /\bvar\s+([^\s,]+)\s+(?:=|:=)\s+.*/gm;
+    const regex = /(?:var\s+|\s+)([^\s,]+)\s*(?:[:=]|:=)/gm;
     const matches = mainFile.match(regex);
     if (matches) {
         matches.forEach((match) => {
             const variableName = match.split(/\s+/)[1];
             const useCases = [
-                `.`, ` `, // Indexing
-                `[`, `(`, "{", "=", ",", // Default expressions
-                `+`, "-", ",", ">", "<", "*", "^", "%", "/" // Math expressions
+                `.`, // Indexing
+                `[`, `(`, "{", "=", ",", "]", ")", "}", ";", // Default expressions
+                `+`, "-", ",", ">", "<", "*", "^", "%", "/", ":=" // Math expressions
             ];
 
             let newName = "v_" + generateString(13);
@@ -215,6 +215,7 @@ const Obfuscate = function(contents) {
             for (i in useCases) {
                 let useCase = useCases[i];
                 mainFile = mainFile.split(variableName + useCase).join(newName + useCase); // replace variable
+                mainFile = mainFile.split(variableName + " " + useCase).join(newName + useCase); // replace variable
             }
         });
     }
