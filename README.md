@@ -10,4 +10,4 @@ Place the build.js file in your golang project directory
 Then run: node build.js
 
 ## Options
-You are able to modify what you would like Encrypted, just open the build.js file and look at the top
+In the build.js file there should be instructions on how to change certain options.
