@@ -10,7 +10,11 @@ Since Windows AntiVirus triggered when obfuscating my go projects with garble, I
 > Insert junk in functions
 > 
 > Hide package imports
+> 
 > Fix import
+
+## Important
+I wouldn't say this is 'secure'
 
 ## Installation
 golinfuscator requires [Node.js](https://nodejs.org/en/download/prebuilt-installer) v16+ to run.
