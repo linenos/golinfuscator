@@ -4,14 +4,13 @@ Since Windows AntiVirus triggered when obfuscating my go projects with garble, I
 ## Features
 - Encrypt Strings
 - Encrypt Boolean statements
-- Minify Output [broken]
+- Rename Variables
 
 ## Upcoming Features
-> Rename variables
-> 
 > Insert junk in functions
 > 
 > Hide package imports
+> Fix import
 
 ## Installation
 golinfuscator requires [Node.js](https://nodejs.org/en/download/prebuilt-installer) v16+ to run.
@@ -24,23 +23,20 @@ node build.js
 Custom Options [ modify the build.js top line code ]
 ```js
 const config  = {
-    // Encrypt all strings
-    EncryptStrings: true,
-
-    // Change boolean statements into number statements (using > and < sign)
-    EncryptBoolean: true,
-
-    // Minify script afterwards, compacting it
-    Minify: true,
+    // Encryption
+    EncryptStrings: true, // Encrypt all strings
+    EncryptBoolean: true, // Change boolean statements into number statements (using > and < sign)
+    EncryptVariables: true, // Change names of variables
 
     // Only target .go files, all other type of files wont be written in the output
     OnlyOutputGo: true,
 
+    // Skip Existing Files in the Output Directory
+    SkipExisting: false,
+
     // Output Directory
     Output: "./Output",
-
-    // Auto Build after obfuscation
-    Build: true,
+    Build: true, // Auto build after obfuscating
     BuildScript: "go build -o obfuscated.exe ./" // this script builds the obfuscated content into the Output directory
 }
 ```
