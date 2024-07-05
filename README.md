@@ -1,5 +1,5 @@
 # golinfuscator
-Since windows AntiVirus triggered when obfuscating my go projects with garble, I decided to make this.
+Since Windows AntiVirus triggered when obfuscating my go projects with garble, I decided to make this.
 
 ## Features
 - Encrypt Strings
