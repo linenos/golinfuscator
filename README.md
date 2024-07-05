@@ -45,10 +45,24 @@ const config  = {
 }
 ```
 
-Exampe Input:
-![image](https://github.com/linenos/golinfuscator/assets/159145344/f8a7a9ad-09fc-484f-bef5-9fba5b85405d)
+## Example Input:
+```golang
+package main
+import (
+	"fmt"
+)
+func booleanStatement() bool {
+	return true
+}
 
-Output ( Btw, the bytes are not the actual value ):
+func main() {
+	testString := "Hello, this is a string"
+	fmt.Println(testString)
+}
+```
+
+
+## Output ( Btw, the bytes are not the actual value ):
 ```golang
 package main
 import (
