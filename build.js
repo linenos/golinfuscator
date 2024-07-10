@@ -304,7 +304,7 @@ const Obfuscate = function(contents) {
             let strtext = str[i];
             let byted = parseInt(strtext.charCodeAt(0)) + addInt/*cached["byteOffset"]*/;
             let byteJunk = generateNumEq(byted, 5);
-            rebuilt += "," + byted;
+            rebuilt += "," + byteJunk;
         }; rebuilt = rebuilt.split(",,").join("");
     
         func = func.replace(`,${str},`, `${cached["Decrypt"]}([]int{${rebuilt}}, ${addIntJunk})`);
