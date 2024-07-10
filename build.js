@@ -3,7 +3,7 @@ const config  = {
     // Encryption
     EncryptStrings: true, // Encrypt all strings
     EncryptBoolean: true, // Change boolean statements into number statements (using > and < sign)
-    EncryptVariables: false, // Change names of variables
+    EncryptVariables: false, // Change names of variables [ BROKEN ]
 
     // Only target .go files, all other type of files wont be written in the output
     OnlyOutputGo: true,
@@ -279,7 +279,9 @@ const Obfuscate = function(contents) {
               statement += `${toselect == "1" && "+" || toselect == "2" && "*" || toselect == "3" && "/" || toselect == "4" && "-" || "-"}${getRandomInt(7, 35)}`;
               currenteq ++;
           };
-          mainFile = mainFile.replace(tosearch, tosearch.includes("return") && `return ${statement}` || statement);
+
+          let formatting = `${tosearch.replace(toequal+"", "")}${statement}`
+          mainFile = mainFile.replace(tosearch, formatting);
       }
     }
 
@@ -302,10 +304,10 @@ const Obfuscate = function(contents) {
             let strtext = str[i];
             let byted = parseInt(strtext.charCodeAt(0)) + addInt/*cached["byteOffset"]*/;
             let byteJunk = generateNumEq(byted, 5);
-            rebuilt += "," + byteJunk;
+            rebuilt += "," + byted;
         }; rebuilt = rebuilt.split(",,").join("");
     
-        func = func.replace(`,${str},`, `${cached["Decrypt"]}([]byte{${rebuilt}}, ${addIntJunk})`);
+        func = func.replace(`,${str},`, `${cached["Decrypt"]}([]int{${rebuilt}}, ${addIntJunk})`);
         mainFile = mainFile.replace(raw[0], func);
     }
 
@@ -329,7 +331,7 @@ const Obfuscate = function(contents) {
           return;
       }
     
-      ${cached["byteArray"]} := make([]byte, ${generateNumEq(300, 30)}) // Create a byte slice with capacity for 100 elements
+      ${cached["byteArray"]} := make([]byte, ${generateNumEq(300, 30)})
       for i := range ${cached["byteArray"]} {
           ${cached["bytedVariable"]} := byte(i)
           ${cached["bytesDump"]}[${cached["bytedVariable"]}] = string([]byte{${cached["bytedVariable"]}})
@@ -337,13 +339,13 @@ const Obfuscate = function(contents) {
       ${cached["bytesDump"]}[${cached["byted300"]}] = ""
     }
     
-    func ${cached["Decrypt"]}(${cached["byteArray"]} []byte, ${cached["subint"]} int) string {
+    func ${cached["Decrypt"]}(${cached["byteArray"]} []int, ${cached["subint"]} int) string {
       ${cached["allocateBytesDump"]}()
       ${cached["resultVariable"]} := ${cached["returnString"]}(${cached["bytesDump"]}[${cached["byted300"]}], ${getRandomInt(1, 2) == "1" && "true" || getRandomInt(3, 350)})
       for _, b := range ${cached["byteArray"]} {
-          ${cached["resultVariable"]} += ${cached["returnString"]}(${cached["bytesDump"]}[b-byte(${cached["subint"]})], ${cached["resultVariable"]});
+          ${cached["resultVariable"]} += ${cached["returnString"]}(${cached["bytesDump"]}[byte(b)-byte(${cached["subint"]})], ${cached["resultVariable"]});
       }
-      return ${cached["resultVariable"]}
+      return strings.Replace(strings.Replace(strings.Replace(${cached["resultVariable"]}, "${"\\\\n"}", "\\n", -1), "${"\\\\t"}", "\\t", -1), "${"\\\\r"}", "\\r", -1)
     }`;
     return mainFile += `\n${goEndScript}`;
 }
