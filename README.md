@@ -1,6 +1,12 @@
 # golinfuscator
 Since Windows AntiVirus triggered when obfuscating my go projects with garble, I decided to make this.
 
+## Update Log
+- Fixed true/false statements
+- Fixed \n, \r and \t in characters
+- Switched from []byte to []int to support higher numbers
+- Emoji's are sadly broken as of now
+
 ## Features
 - Encrypt Strings
 - Encrypt Boolean statements
@@ -30,7 +36,7 @@ const config  = {
     // Encryption
     EncryptStrings: true, // Encrypt all strings
     EncryptBoolean: true, // Change boolean statements into number statements (using > and < sign)
-    EncryptVariables: true, // Change names of variables
+    EncryptVariables: false, // Change names of variables [ BROKEN ]
 
     // Only target .go files, all other type of files wont be written in the output
     OnlyOutputGo: true,
