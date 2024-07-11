@@ -4,8 +4,10 @@ Since Windows AntiVirus triggered when obfuscating my go projects with garble, I
 ## Update Log
 - Fixed true/false statements
 - Fixed \n, \r and \t in characters
-- Switched from []byte to []int to support higher numbers
+- Switched from []byte to []int to support higher characters
+- Fixed strings erroring in certain cases
 - Emoji's are sadly broken as of now
+
 
 ## Features
 - Encrypt Strings
