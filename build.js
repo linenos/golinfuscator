@@ -14,7 +14,7 @@ const config  = {
     // Output Directory
     Output: "./Output",
     Build: true, // Auto build after obfuscating
-    BuildScript: `go build -ldflags "''" -o obfuscated.exe ./` // this script builds the obfuscated content into the Output directory
+    BuildScript: `go build -ldflags "-w -s" -o obfuscated.exe ./` // this script builds the obfuscated content into the Output directory
 }
 
 
