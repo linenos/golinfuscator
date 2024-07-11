@@ -307,7 +307,7 @@ const Obfuscate = function(contents) {
             rebuilt += "," + byteJunk;
         }; rebuilt = rebuilt.split(",,").join("");
     
-        func = func.replace(`,${str},`, `${cached["Decrypt"]}([]int{${rebuilt}}, ${addIntJunk})`);
+        func = func.replace(`,${str},`, `(${cached["Decrypt"]}([]int{${rebuilt}}, ${addIntJunk}))`);
         mainFile = mainFile.replace(raw[0], func);
     }
 
